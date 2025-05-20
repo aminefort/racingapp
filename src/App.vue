@@ -26,10 +26,18 @@ const theme = useTheme()
 const globalStore = useGlobalStore();
 
 const toggleApp = (show: boolean): void => {
+  if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+    globalStore.$state.appIsOpen = show;
+    if (show) {
+      globalStore.$state = { ...testState, appIsOpen: true };
+    }
+    return;
+  }
+  
   if (show) {
     getBaseData()
   }
-  globalStore.$state.appIsOpen = show
+  globalStore.$state.appIsOpen = show;
 };
 
 const toggleHud = (show: boolean): void => {
